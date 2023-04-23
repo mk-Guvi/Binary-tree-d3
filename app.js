@@ -12,28 +12,66 @@ class BinaryTree {
     this.root = node;
   }
 
-  insert(node, root = this.root) {
-    if (!root) {
-      // if tree is empty, make node the root
+  // randomInsert(node, root = this.root) {
+  //   if (!root) {
+  //     // if tree is empty, make node the root
+  //     this.root = node;
+  //     return;
+  //   }
+
+  //   if (root.left == null) {
+  //     root.left = node;
+  //     node.parent = root;
+  //   } else if (root.right == null) {
+  //     root.right = node;
+  //     node.parent = root;
+  //   } else {
+  //     // recursively insert node in left or right subtree
+  //     if (Math.random() < 0.5) {
+  //       this.insert(node, root.left);
+  //     } else {
+  //       this.insert(node, root.right);
+  //     }
+  //   }
+  // }
+
+  // Insert in Complete binary tree format.
+  insert(node) {
+    // If the root is empty, make the node the root.
+    if (!this.root) {
       this.root = node;
       return;
     }
 
-    if (root.left == null) {
-      root.left = node;
-      node.parent = root;
-    } else if (root.right == null) {
-      root.right = node;
-      node.parent = root;
-    } else {
-      // recursively insert node in left or right subtree
-      if (Math.random() < 0.5) {
-        this.insert(node, root.left);
-      } else {
-        this.insert(node, root.right);
+    // Create a queue to keep track of nodes.
+    let queue = [this.root];
+
+    // While the queue is not empty, keep traversing the tree level by level.
+    while (queue.length > 0) {
+      // Dequeue the first node from the queue.
+      let currNode = queue.shift();
+
+      // If the left child of the current node is null, insert the new node as its left child.
+      if (currNode.left === null) {
+        currNode.left = node;
+        node.parent = currNode;
+        return;
+      }
+      // Else, if the right child of the current node is null, insert the new node as its right child.
+      else if (currNode.right === null) {
+        currNode.right = node;
+        node.parent = currNode;
+        return;
+      }
+      // Else, both the left and right children of the current node exist.
+      // Enqueue the left and right children of the current node to process them later.
+      else {
+        queue.push(currNode.left);
+        queue.push(currNode.right);
       }
     }
   }
+
   clear() {
     this.root = null;
   }
