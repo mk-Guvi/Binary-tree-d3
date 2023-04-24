@@ -1,6 +1,8 @@
 ## Binary Tree with D3.js
 
-To start server:
+1.) Yarn install or npm install
+
+2.) To start server:
 
 ```bash
 npm run start
