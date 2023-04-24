@@ -88,8 +88,6 @@ function creatBinaryTree(values) {
   var tree = new BinaryTree();
 
   for (i in numbers) {
-    console.log(i);
-
     tree.insert(new Node(numbers[i]), tree.root);
   }
 
@@ -344,6 +342,12 @@ function creatBinaryTree(values) {
   }
 }
 
+/**
+ * The function clears all child elements from a given parent element.
+ * @param element - The parameter "element" is a reference to an HTML element that we want to clear of
+ * all its child elements. The function "clearElement" uses a while loop to remove all child elements
+ * of the given element until there are no more child elements left.
+ */
 function clearElement(element) {
   while (element.firstChild) {
     element.removeChild(element.firstChild);
@@ -351,14 +355,20 @@ function clearElement(element) {
 }
 
 const onSubmit = () => {
-  const { value } = document.getElementById("binarytreeinputs");
+  const value = d3?.select("#binarytreeinputs")?.property("value");
   if (value) {
     // get DOM element to display the tree
-    let treeContainer = document.getElementById("d3-container");
+    //let treeContainer = document.getElementById("d3-container");
     // clear previous tree from DOM element
-    if (treeContainer) {
-      clearElement(treeContainer);
+    // if (treeContainer) {
+    //   clearElement(treeContainer);
+    // }
+
+    let treeContainer = d3.select("#d3-container");
+    if (!treeContainer.empty()) {
+      treeContainer.selectAll("*").remove();
     }
+
     creatBinaryTree(value?.split(",")?.filter((e) => e));
   } else {
     alert("Enter some value");
