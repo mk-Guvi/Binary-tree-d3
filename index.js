@@ -1,5 +1,3 @@
-import "./index.css";
-import * as d3 from "d3";
 class Node {
   constructor(value) {
     this.value = value;
@@ -85,7 +83,7 @@ function creatBinaryTree(values) {
 
   let tree = new BinaryTree();
 
-  for (i in numbers) {
+  for (let i in numbers) {
     tree.insert(new Node(numbers[i]), tree.root);
   }
 
@@ -288,7 +286,7 @@ function creatBinaryTree(values) {
     // Initialize previously clicked node as null
     let prevNode = null;
 
-    function onClickNode(_, d) {
+    function onClickNode(d) {
       // If there was a previously clicked node, reset its color and the edge colors
       if (prevNode) {
         // Reset node colors
