@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "Binary tree with d3Js",
   "scripts": {
-    "start": "live-server --port=8080",
-    "build": "webpack --mode=production"
+    "build": "webpack",
+    "webpack-watch": "webpack build --watch",
+    "start": "webpack serve"
   },
   "author": "Musharaf",
   "license": "ISC",
@@ -12,5 +13,19 @@
     "d3": "^7.8.4",
     "live-server": "^1.2.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/preset-env": "^7.16.11",
+    "@types/d3": "^7.4.0",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.7.3",
+    "html-webpack-plugin": "^5.5.0",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.4",
+    "webpack": "^5.81.0",
+    "webpack-bundle-analyzer": "^4.5.0",
+    "webpack-cli": "^5.0.2",
+    "webpack-dev-server": "^4.13.3"
+  }
 }

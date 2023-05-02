@@ -1,3 +1,5 @@
+import "./index.css";
+import * as d3 from "d3";
 class Node {
   constructor(value) {
     this.value = value;
@@ -77,29 +79,25 @@ class BinaryTree {
   }
 }
 
-function myXOR(a, b) {
-  return (a || b) && !(a && b);
-}
-
 // Main Program
 function creatBinaryTree(values) {
-  var numbers = [...values];
+  let numbers = [...values];
 
-  var tree = new BinaryTree();
+  let tree = new BinaryTree();
 
   for (i in numbers) {
     tree.insert(new Node(numbers[i]), tree.root);
   }
 
   // Set dimensions and margins for diagram
-  var margin = { top: 15, bottom: 0 },
+  let margin = { top: 15, bottom: 0 },
     width = 400,
     height = 400 - margin.top - margin.bottom;
 
-  // append the svg object to the body of the page
+  // append the svg object to the container of the page
   // appends a 'group' element to 'svg'
   // moves the 'group' element to the top left margin
-  var svg = d3
+  let svg = d3
     .select("#d3-container")
     .append("svg")
     .attr("width", "100%")
@@ -108,12 +106,12 @@ function creatBinaryTree(values) {
     .append("g")
     .attr("transform", "translate(0," + margin.top + ")");
 
-  var i = 0,
+  let i = 0,
     duration = 750,
     root;
 
   // Declares a tree layout and assigns the size
-  var treemap = d3.tree().size([width, height]);
+  let treemap = d3.tree().size([width, height]);
 
   // Assigns parent, children, height, depth, and coordinates
 
@@ -136,10 +134,10 @@ function creatBinaryTree(values) {
   // Update
   function update(source) {
     // Assigns the x and y position for the nodes
-    var treeData = treemap(root);
+    let treeData = treemap(root);
 
     // Compute the new tree layout.
-    var nodes = treeData.descendants(),
+    let nodes = treeData.descendants(),
       links = treeData.descendants().slice(1);
 
     // Normalize for fixed-depth
@@ -150,26 +148,26 @@ function creatBinaryTree(values) {
     // **************** Nodes Section ****************
 
     // Update the nodes...
-    var node = svg.selectAll("g.node").data(nodes, function (d) {
+    let node = svg.selectAll("g.node").data(nodes, function (d) {
       return d.id || (d.id = ++i);
     });
 
     // Enter any new nodes at the parent's previous position.
-    var nodeEnter = node
+    let nodeEnter = node
       .enter()
       .append("g")
       .attr("class", "node")
       .attr("transform", function (d) {
         return "translate(" + source.x0 + "," + source.y0 + ")";
       })
-      .on("click", click);
+      .on("click", onClickNode);
 
     // Add Circle for the nodes
     nodeEnter
       .append("circle")
       .attr("class", function (d) {
         if (isNaN(d.value)) {
-          return "node hidden";
+          return "node ";
         }
         return "node";
       })
@@ -189,7 +187,7 @@ function creatBinaryTree(values) {
       });
 
     // Update
-    var nodeUpdate = nodeEnter.merge(node);
+    let nodeUpdate = nodeEnter.merge(node);
 
     // Transition to the proper position for the nodes
     nodeUpdate
@@ -209,7 +207,7 @@ function creatBinaryTree(values) {
       .attr("cursor", "pointer");
 
     // Remove any exiting nodes
-    nodeExit = node
+    let nodeExit = node
       .exit()
       .transition()
       .duration(duration)
@@ -227,7 +225,7 @@ function creatBinaryTree(values) {
     // **************** Links Section ****************
 
     // Update the links...
-    var link = svg
+    let link = svg
       .selectAll("path.link")
 
       .data(links, function (d) {
@@ -235,22 +233,22 @@ function creatBinaryTree(values) {
       });
 
     // Enter any new links at the parent's previous position
-    var linkEnter = link
+    let linkEnter = link
       .enter()
       .insert("path", "g")
       .attr("class", function (d) {
         if (isNaN(d.value)) {
-          return "link hidden ";
+          return "link  ";
         }
         return "link";
       })
       .attr("d", function (d) {
-        var o = { x: source.x0, y: source.y0 };
+        let o = { x: source.x0, y: source.y0 };
         return diagonal(o, o);
       });
 
     // Update
-    var linkUpdate = linkEnter.merge(link);
+    let linkUpdate = linkEnter.merge(link);
 
     // Transition back to the parent element position
     linkUpdate
@@ -267,7 +265,7 @@ function creatBinaryTree(values) {
       .transition()
       .duration(duration)
       .attr("d", function (d) {
-        var o = { x: source.x, y: source.y };
+        let o = { x: source.x, y: source.y };
       })
       .remove();
 
@@ -279,7 +277,7 @@ function creatBinaryTree(values) {
 
     // Create a curved (diagonal) path from parent to the child nodes
     function diagonal(s, d) {
-      path = `M ${s.x} ${s.y}
+      let path = `M ${s.x} ${s.y}
             C ${(s.x + d.x) / 2} ${s.y},
               ${(s.x + d.x) / 2} ${d.y},
               ${d.x} ${d.y}`;
@@ -288,9 +286,9 @@ function creatBinaryTree(values) {
     }
 
     // Initialize previously clicked node as null
-    var prevNode = null;
+    let prevNode = null;
 
-    function click(d) {
+    function onClickNode(_, d) {
       // If there was a previously clicked node, reset its color and the edge colors
       if (prevNode) {
         // Reset node colors
@@ -304,11 +302,11 @@ function creatBinaryTree(values) {
       }
 
       // Change the color of clicked node
-      d3.select(this).select("circle").style("fill", "red");
+      d3.select(this).select("circle").style("fill", "orange");
 
       // Change the color of all parent nodes
-      var ancestors = [];
-      var current = d;
+      let ancestors = [];
+      let current = d;
       while (current.parent) {
         ancestors.unshift(current);
         current = current.parent;
@@ -324,7 +322,7 @@ function creatBinaryTree(values) {
         .style("fill", "orange");
 
       // Change the color of all edges connecting clicked node and root
-      var path = [d];
+      let path = [d];
       while (path[0].parent) {
         path.unshift(path[0].parent);
       }
@@ -374,3 +372,5 @@ const onSubmit = () => {
     alert("Enter some value");
   }
 };
+
+document?.getElementById("submit")?.addEventListener("click", onSubmit);
