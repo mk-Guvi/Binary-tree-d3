@@ -4,7 +4,7 @@ const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
-  mode: "production",
+  mode: "development",
   entry: {
     bundle: path.resolve(__dirname, "src/index.js"),
   },
@@ -13,6 +13,7 @@ module.exports = {
     filename: "[name][contenthash].js",
     clean: true,
     assetModuleFilename: "[name][ext]",
+    publicPath: "/Binary-tree-d3/",
   },
   devtool: "source-map",
   devServer: {
