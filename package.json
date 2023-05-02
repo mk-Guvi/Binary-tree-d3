@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "Binary tree with d3Js",
   "scripts": {
-    "build": "webpack",
     "webpack-watch": "webpack build --watch",
     "start": "webpack serve",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "build": "webpack --mode production"
   },
   "author": "Musharaf",
   "license": "ISC",
