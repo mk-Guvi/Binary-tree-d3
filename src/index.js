@@ -1,3 +1,5 @@
+import * as d3 from "d3";
+import "./index.css";
 class Node {
   constructor(value) {
     this.value = value;
@@ -158,7 +160,7 @@ function creatBinaryTree(values) {
       .attr("transform", function (d) {
         return "translate(" + source.x0 + "," + source.y0 + ")";
       })
-      .on("click", onClickNode);
+      .on("click", (_, d) => onClickNode(d));
 
     // Add Circle for the nodes
     nodeEnter
