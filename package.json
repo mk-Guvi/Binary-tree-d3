@@ -6,7 +6,7 @@
   "scripts": {
     "webpack-watch": "webpack build --watch",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
+    "deploy-gh": "npm run build && gh-pages -d dist",
     "start": "webpack serve",
     "clean:modules": "rm -rf node_modules && rm yarn.lock && yarn",
     "build": "webpack --mode production"
