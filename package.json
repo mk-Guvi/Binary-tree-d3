@@ -8,6 +8,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "start": "webpack serve",
+    "clean:modules": "rm -rf node_modules && rm yarn.lock && yarn",
     "build": "webpack --mode production"
   },
   "author": "Musharaf",
